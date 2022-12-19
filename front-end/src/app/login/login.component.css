@@ -1,0 +1,78 @@
+body {
+    background: #22c1c3; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #22c1c3, #fdbb2d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #22c1c3, #fdbb2d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+    height: 100vh;
+}
+
+#sign_in, #sign_up {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 440px;
+    width: calc(100% - 40px);
+    padding: 44px;
+    margin-top: 25vh;
+    background: rgba(255, 255, 255, 0.9);
+    min-height: 338px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+#sign_up {
+    margin-top: 15vh;
+}
+
+.small_logo {
+    max-width: 175px;
+    margin-bottom: 30px;
+
+}
+
+h4 {
+    margin-bottom: 15px;
+}
+
+h5 {
+    color: #e81123;
+    font-size: 16px;
+}
+
+input, select{
+    border-color: rgba(0, 0, 0, 0.6);
+    height: 36px;
+    background-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    padding: 6px 10px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+input:focus{
+    outline: none;
+    border-color: #22c1c3;
+}
+
+button {
+    margin-top: 25px;
+    border-width: 0;
+    background-color: rgb(101,131,254);
+    margin-right: auto;
+    width: 100px;
+    height: 30px;
+    color: white;
+    border-radius: 5px;
+    right: 10px;
+    float: right;
+}
+
+button:hover{
+    background-color: rgb(101,131,254);
+    opacity: 0.8;
+}
+
+.captcha{
+    max-width: 200px;
+}
