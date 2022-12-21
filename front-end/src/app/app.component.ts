@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'mail-server';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);

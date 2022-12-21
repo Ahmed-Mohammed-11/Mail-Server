@@ -4,47 +4,64 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Mail</title>
-    <!-- <link rel="stylesheet" href="nav-bar.component.css"> -->
+    <title>Dashboard - Brand</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="src/app/assets/css/styles.min.css"> -->
+    <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.min.css">
 </head>
 
-<body class="text-center">
-    <!-- nav bar -->
-    <nav class="navbar navbar-light navbar-expand-md sticky-top py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <span
-                    class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"
-                    style="background: rgb(238,238,238);">
-                    <img src="assets/img/logo.png" width="47" height="47" style="margin-left: 18px;">
-                </span>
-                <span style="margin-left: 20px;">Mail Server</span>
-            </a>
-            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-                <span class="visually-hidden">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navcol-1" style="margin-left: 39px;">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" style="margin-top: 5px;margin-left: 65px;">
-                            <input class=" form-control-sm " type="search"
-                                style="margin-top: 0px;border-style: none;text-align: center; ">
-                            <button class="btn btn-primary btn-sm link-light" type="button"
-                                style="margin-left: 10px;background: rgb(101,131,254);border-style: none;margin-bottom: 3px;">Search</button>
-                        </a>
-                    </li>
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+            style="background: var(--bs-accordion-active-color);">
+            <div class="container-fluid d-flex flex-column p-0"><a
+                    class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><span style="font-size: 25px;">E Service</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link active" href="#compose"><i class="fas fa-marker"
+                                style="font-size: 15px;"></i><span style="font-size: 15px;">Compose</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#inbox"><i class="fas fa-inbox"
+                                style="font-size: 15px;"></i><span style="font-size: 15px;">Inbox</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#drafts"><i class="fas fa-book"
+                                style="font-size: 15px;"></i><span style="font-size: 15px;">Drafts</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#sent"><i class="fab fa-telegram-plane"
+                                style="font-size: 15px;"></i><span style="font-size: 15px;">Sent</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#trash"><i class="far fa-trash-alt"
+                                style="font-size: 15px;"></i><span style="font-size: 15px;">Trash</span></a></li>
                 </ul>
+                <div class="text-center d-none d-md-inline"></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input class="bg-light form-control border-0 small shadow-none" type="text"
+                                    placeholder="Search for ..." style="border-style:none;"><button class="btn btn-primary py-0" type="button"><i
+                                        class="fas fa-search"></i></button></div>
+                        </form>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                        </ul>
+                        <div class="dropdown"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
+                                href="#" style="text-decoration: none;font-size: 18px;">Sort</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">First Item</a>
+                                <a class="dropdown-item" href="#">Second Item</a>
+                                <a class="dropdown-item" href="#">Third Item</a></div>
+                        </div>
+                    </div>
+                </nav>
             </div>
         </div>
-    </nav>
-    <!-- End: nav bar -->
-
-    <!-- side-menu -->
-    <app-side-bar></app-side-bar>
-    <!-- End: side-menu -->
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.min.js"></script>
 </body>
 
 </html>
