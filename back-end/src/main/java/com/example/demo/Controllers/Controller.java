@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 
+import com.example.demo.Services.LogInService;
 import com.example.demo.Services.RegisterService;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -11,12 +12,19 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/register")
+
 public class Controller {
     @Autowired
     private RegisterService registerService ;
-    @PostMapping()
+    @Autowired
+    private LogInService logInService ;
+    @PostMapping(value = "/register")
     public String createUser(@RequestBody String user) throws IOException, ParseException {
         return registerService.createUser(user);
+    }
+
+    @PostMapping(value = "/login")
+    public String login(@RequestBody String user) throws IOException, ParseException{
+        return logInService.letUserIn(user);
     }
 }
