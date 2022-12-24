@@ -4,11 +4,9 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
-
-import javax.xml.validation.Schema;
 import java.io.*;
 import java.util.UUID;
-
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class RegisterService {
@@ -17,7 +15,7 @@ public class RegisterService {
 //    private String filePath = "D:\\Web\\Mail-Server\\back-end\\src\\main\\java\\com\\example\\demo\\DataBase\\";
     // if the relative path didn't work uncomment the absolute path
 
-    public String createUser(String user) throws IOException, ParseException {
+    public String createUser(String user, HttpServletResponse response) throws IOException, ParseException {
 
         //convert the user from string to json object
         JSONObject userJson = new JSONObject(user);
@@ -46,7 +44,7 @@ public class RegisterService {
         try {
             FileWriter users = new FileWriter(filePath + "users.json");         // writing back to the file
             users.write(a.toString());
-            users.flush();
+            users.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,6 +65,7 @@ public class RegisterService {
 
 
         //and as an indicator return the created session id for him
-        return uuid.toString();
+        response.setHeader("Set-Cookie", "user_id=" + uuid.toString() + "; Path=/");
+        return  uuid.toString();
     }
 }

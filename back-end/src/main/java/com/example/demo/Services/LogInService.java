@@ -1,21 +1,18 @@
 package com.example.demo.Services;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class LogInService {
     String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
 
-    public String letUserIn(String user) throws IOException, ParseException {
-
+    public int letUserIn(String user, HttpServletResponse response) throws IOException, ParseException {
         //convert user to json object
         JSONObject userJson = new JSONObject(user);
         JSONParser parser  = new JSONParser();
@@ -29,10 +26,12 @@ public class LogInService {
             JSONObject elementInArray = a.getJSONObject(i);
             if (elementInArray.get("email").equals(userJson.get("email"))){
                 if (elementInArray.get("password").equals(userJson.get("password"))){
-                    return  elementInArray.get("uuid").toString();
+                    String UUID = elementInArray.get("uuid").toString();
+                    response.setHeader("Set-Cookie", "user_id=" + UUID + "; Path=/");
+                    return 200;
                 }
             }
         }
-        return "email and/or password incorrect";
+        return 404;
     }
 }
