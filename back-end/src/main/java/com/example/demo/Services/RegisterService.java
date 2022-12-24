@@ -12,8 +12,10 @@ import java.util.UUID;
 
 @Service
 public class RegisterService {
-    //try to change to relative path instead of the absolute path
-    private String filePath = "D:\\Web\\Mail-Server\\back-end\\src\\main\\java\\com\\example\\demo\\DataBase\\";
+    //try to change to relative path instead of the relative path
+    String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
+//    private String filePath = "D:\\Web\\Mail-Server\\back-end\\src\\main\\java\\com\\example\\demo\\DataBase\\";
+    // if the relative path didn't work uncomment the absolute path
 
     public String createUser(String user) throws IOException, ParseException {
 
@@ -29,7 +31,7 @@ public class RegisterService {
         //loop through current users to check if the username was already taken
         for(int i = 0 ; i < a.length() ; i ++){
             JSONObject elementInArray = a.getJSONObject(i);
-            if (elementInArray.get("username").equals(userJson.get("username"))){
+            if (elementInArray.get("email").equals(userJson.get("email"))){
                 //return the error if it's already taken
                 return "this username is already taken";
             }

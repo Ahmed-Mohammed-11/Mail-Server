@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Service
 public class LogInService {
-    private String filePath = "D:\\Web\\Mail-Server\\back-end\\src\\main\\java\\com\\example\\demo\\DataBase\\";
+    String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
 
     public String letUserIn(String user) throws IOException, ParseException {
 
@@ -27,12 +27,12 @@ public class LogInService {
         //loop through current users to check if the username was already taken
         for(int i = 0 ; i < a.length() ; i ++){
             JSONObject elementInArray = a.getJSONObject(i);
-            if (elementInArray.get("username").equals(userJson.get("username"))){
+            if (elementInArray.get("email").equals(userJson.get("email"))){
                 if (elementInArray.get("password").equals(userJson.get("password"))){
                     return  elementInArray.get("uuid").toString();
                 }
             }
         }
-        return "username and/or password incorrect";
+        return "email and/or password incorrect";
     }
 }
