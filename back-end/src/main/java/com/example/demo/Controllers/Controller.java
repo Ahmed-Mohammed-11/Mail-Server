@@ -1,7 +1,8 @@
 package com.example.demo.Controllers;
-import com.example.demo.Services.LogInService;
-import com.example.demo.Services.RegisterService;
-import com.example.demo.Services.MailService;
+import com.example.demo.Services.Emails.ComposeService;
+import com.example.demo.Services.UserHandlers.LogInService;
+import com.example.demo.Services.UserHandlers.RegisterService;
+import com.example.demo.Services.Emails.MailService;
 
 import org.json.JSONArray;
 import java.util.HashMap;
@@ -26,6 +27,8 @@ public class Controller {
     private MailService Mail;
     @Autowired
     private LogInService logInService;
+    @Autowired
+    private ComposeService composeService ;
 
     @PostMapping(value = "/register")
     public String createUser(@RequestBody String user, HttpServletResponse response) throws IOException, ParseException {
@@ -60,10 +63,15 @@ public class Controller {
             String uuid = WebUtils.getCookie(request, "user_id").getValue();
             JSONArray emails = Mail.getEmails(uuid);
             respObj.put("results", "LIST OF EMAILS :)");
-            
+
         } else {
             respObj.put("results", "User not logged in");
         }
         return respObj;
+    }
+
+    @PostMapping(value = "/compose")
+    public String compose(@RequestBody String email) throws IOException, ParseException{
+        return composeService.compose(email);
     }
 }

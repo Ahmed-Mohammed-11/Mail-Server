@@ -1,4 +1,4 @@
-package com.example.demo.Services;
+package com.example.demo.Services.Emails;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
