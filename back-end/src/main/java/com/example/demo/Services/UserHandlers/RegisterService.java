@@ -26,7 +26,7 @@ public class RegisterService {
             JSONObject elementInArray = users.getJSONObject(i);
             if (elementInArray.get("email").equals(userJson.get("email"))){
                 //return the error if it's already taken
-                return "this username is already taken";
+                return "this email is already taken";
             }
         }
 

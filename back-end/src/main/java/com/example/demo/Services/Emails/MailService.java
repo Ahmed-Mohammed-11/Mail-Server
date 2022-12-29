@@ -1,31 +1,21 @@
 package com.example.demo.Services.Emails;
+import com.example.demo.Services.DatabaseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class MailService {
-    String DB_PATH = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
-    public JSONArray getEmails(String uuid) {
-        JSONArray emails = new JSONArray();
-        File folder = new File(DB_PATH + uuid);
-        if (folder.exists() && folder.isDirectory()){
-            File[] listOfFiles = folder.listFiles();  // List of Mail Boxes (Folders)
-            for (File file: listOfFiles) {
-                if (file.isFile()) {
-                    JSONObject batch = new JSONObject();
-                    JSONArray emailsInBatch = new JSONArray();
-                    // To Do: Read emails from file and add them to emailsInBatch
-                    batch.put("folder", file.getName());
-                    batch.put("emails", emailsInBatch);
-                    emails.put(batch);
-                }
-            }
-        }
+    private DatabaseHandler dbHanlder = DatabaseHandler.getInstance();
+    private JSONArray emails ;
+
+    public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException {
+        emails = dbHanlder.getEmails(uuid, folderName);
         return emails;
     }
-
 
     public void deleteEmail(String uuid, String email) {
         // To Do: Delete email from file
@@ -35,24 +25,16 @@ public class MailService {
         // To Do: Move email to another folder
     }
 
-    public void createFolder(String uuid, String folderName) {
-        // To Do: Create folder
+    public boolean createFolder(String uuid, String folderName) {
+        return dbHanlder.createFolder(uuid, folderName);
     }
 
-    public void deleteFolder(String uuid, String folderName) {
-        // To Do: Delete folder
-    }
-
-    public void renameFolder(String uuid, String folderName) {
-        // To Do: Rename folder
+    public boolean deleteFolder(String uuid, String folderName) {
+        return dbHanlder.deleteFolder(uuid, folderName);
     }
 
     public void markAsRead(String uuid, String email) {
         // To Do: Mark email as read
-    }
-
-    public void markAsUnread(String uuid, String email) {
-        // To Do: Mark email as unread
     }
 
     public void markAsImportant(String uuid, String email) {
@@ -67,7 +49,4 @@ public class MailService {
         // To Do: Mark email as spam
     }
 
-    public void markAsNotSpam(String uuid, String email) {
-        // To Do: Mark email as not spam
-    }
 }

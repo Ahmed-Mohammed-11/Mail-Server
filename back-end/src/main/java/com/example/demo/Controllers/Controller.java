@@ -52,24 +52,39 @@ public class Controller {
         return respObj;
     }
 
-    @RequestMapping(value="/getEmails", method=RequestMethod.GET)
-    public ObjectNode getEmails(HttpServletRequest request) throws IOException, ParseException{
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode respObj = mapper.createObjectNode();
-
+    @RequestMapping(value="/getEmails/{folderName}", method=RequestMethod.GET)
+    public String getEmails(HttpServletRequest request, @PathVariable String folderName) throws IOException, ParseException{
         if (WebUtils.getCookie(request, "user_id") != null){
             String uuid = WebUtils.getCookie(request, "user_id").getValue();
-            JSONArray emails = Mail.getEmails(uuid);
-            respObj.put("results", "LIST OF EMAILS :)");
-
+            JSONArray emails = Mail.getEmails(uuid, folderName);
+            return emails.toString();
         } else {
-            respObj.put("results", "User not logged in");
+            return "User is not logged in";
         }
-        return respObj;
     }
 
     @PostMapping(value = "/compose")
     public String compose(@RequestBody String email) throws IOException, ParseException{
         return composeService.compose(email);
+    }
+
+    @PostMapping(value = "/createFolder/{folderName}")
+    public String create(HttpServletRequest request, @PathVariable String folderName){
+        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+        if(Mail.createFolder(uuid, folderName)){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
+    @DeleteMapping(value = "/deleteFolder/{folderName}")
+    public String delete(HttpServletRequest request, @PathVariable String folderName){
+        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+        if(Mail.deleteFolder(uuid, folderName)){
+            return "success";
+        }else{
+            return "error";
+        }
     }
 }

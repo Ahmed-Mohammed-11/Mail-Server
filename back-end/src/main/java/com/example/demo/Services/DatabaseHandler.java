@@ -1,13 +1,14 @@
 package com.example.demo.Services;
-
+import org.json.simple.parser.JSONParser;
 import java.io.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+
 
 public class DatabaseHandler {
     static String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
@@ -37,6 +38,28 @@ public class DatabaseHandler {
         return users;
     }
 
+    public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException{
+
+        File userDirectory = new File(filePath + uuid + "\\" + folderName);
+        System.out.println(userDirectory);
+        File[] directoryListing = userDirectory.listFiles();
+
+        JSONParser parser  = new JSONParser();
+        JSONArray  emails = new JSONArray();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                FileReader file = new FileReader(child);
+                Object loaded = parser.parse(file);
+                System.out.println(loaded);
+                emails.put(loaded);
+            }
+        } else {
+            return null;
+        }
+
+        System.out.println(emails);
+        return emails;
+    }
     public void saveUsers(JSONArray users, String uuid){
 
         try {
@@ -59,6 +82,27 @@ public class DatabaseHandler {
         sent.mkdir();
         drafts.mkdir();
         trash.mkdir();
+    }
+
+    public boolean createFolder(String uuid, String folderName){
+        try {
+            File customFolder = new File(filePath + uuid + "\\" + folderName);
+            customFolder.mkdir();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteFolder(String uuid, String folderName){
+        try {
+            FileUtils.deleteDirectory(new File(filePath + uuid + "\\" + folderName));
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void saveEmail(JSONObject email, String uuid, String emailID, String emailStatus){
