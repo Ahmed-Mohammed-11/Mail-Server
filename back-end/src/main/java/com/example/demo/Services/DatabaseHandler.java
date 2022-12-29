@@ -63,7 +63,6 @@ public class DatabaseHandler {
 
     public void saveEmail(JSONObject email, String uuid, String emailID, String emailStatus){
         FileWriter userFile = null ;
-        System.out.println(uuid);
         try {
             switch (emailStatus){
                 //save the email in sender and receiver files
@@ -77,6 +76,4 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
-
-
 }
