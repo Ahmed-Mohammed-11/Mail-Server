@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="register">
 
 <head>
     <meta charset="utf-8">
@@ -16,23 +16,23 @@
         <img class="small_logo" src="/assets/img/logo2.png">
         <h4>Create account</h4>
         <h5 class="error_message" style="display: none;">Someone already has this email address. Please try another name.</h5>
-        <input type="text" placeholder="First Name" style="width: 49%" />
-        <input type="text" placeholder="Last Name" style="width: 49%" />
-        <input type="text" placeholder="New email" style="width: 49%" />
-        <select name="email" style="width: 49%">
+        <input type="text" id="first" placeholder="First Name" style="width: 49%" />
+        <input type="text" id="second" placeholder="Last Name" style="width: 49%" />
+        <input type="text" id="email" placeholder="New email" style="width: 49%" />
+        <select name="email" id="aemail" style="width: 49%">
             <option>@embaby.tech</option>
             <option>@ahmed.tech</option>
             <option>@talha.tech</option>
             <option>@aladdin.tech</option>
         </select>
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Confirm Password" />
+        <input type="password" id="pass" placeholder="Password" />
+        <input type="password" id="cpass" placeholder="Confirm Password" />
 
         <img class="captcha" src="/assets/img/CAPTCHA.png">
-        <input type="text" placeholder="Solve Captcha" style="width: 50%;" />
+        <input type="text" id="cap" placeholder="Solve Captcha" style="width: 50%;" />
         
         <h6>Already have an account? <a href="/register">Sign in!</a></h6>
-        <button type="submit">Sign In</button>
+        <button type="submit"(click)="log()">Sign In</button>
     </div>
 
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
