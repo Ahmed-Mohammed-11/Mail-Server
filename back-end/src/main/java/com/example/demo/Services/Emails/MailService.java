@@ -16,11 +16,7 @@ public class MailService {
                 if (file.isFile()) {
                     JSONObject batch = new JSONObject();
                     JSONArray emailsInBatch = new JSONArray();
-
                     // To Do: Read emails from file and add them to emailsInBatch
-
-
-
                     batch.put("folder", file.getName());
                     batch.put("emails", emailsInBatch);
                     emails.put(batch);
@@ -30,9 +26,6 @@ public class MailService {
         return emails;
     }
 
-    public void sendEmail(String uuid, String email) {
-        // To Do: Save email to file
-    }
 
     public void deleteEmail(String uuid, String email) {
         // To Do: Delete email from file
