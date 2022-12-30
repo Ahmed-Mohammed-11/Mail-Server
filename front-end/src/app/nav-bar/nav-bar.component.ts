@@ -24,5 +24,20 @@ export class NavBarComponent implements OnInit{
         document.getElementById("nav").style.display = "none";
       }
     });
+
   }
+
+
+  isHidden:boolean = true;
+
+  createClicked() {
+    this.isHidden = !this.isHidden;
+    console.log(this.isHidden);
+  } 
+
+  cancelClicked() {
+    this.isHidden = true;
+    console.log(this.isHidden);
+  }
+
 }

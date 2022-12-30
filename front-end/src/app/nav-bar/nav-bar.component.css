@@ -1,0 +1,66 @@
+.dialog-box{
+    left: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.488);
+    overflow: auto;
+    color: white;   
+}
+
+
+menu button{
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #4e73df;
+    color: white;
+}
+
+
+
+.cancel{
+    background-color: #e81123db !important;
+    margin-right: 11px ;
+    margin-left: 5px;
+}
+
+#folder-input{
+    border: none;
+    border-radius:5px;
+}
+
+#folder-input:focus{
+    outline: none;
+}
+
+menu button:hover{
+    background-color: #235affba;
+    color: white;
+}
+
+.cancel:hover{
+    background-color: #c91100df !important;
+    color: white;
+}
+
+.btn{
+    border: none;
+    border-radius: 5px;
+    background-color: #4e73df;
+    color: white;
+    padding: 4px !important;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    margin: 0px;;
+}
+
+    

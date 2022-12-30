@@ -31,12 +31,25 @@
                                 style="font-size: 15px;"></i><span style="font-size: 15px;">Sent</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="#trash"><i class="far fa-trash-alt"
                                 style="font-size: 15px;"></i><span style="font-size: 15px;">Trash</span></a></li>
-<!--                     This is the create folder button  -->
-<!--                     <li class="nav-item"><a class="nav-link active" href="#create"><i class="far fa-trash-alt"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Create Folder</span></a></li> -->
+                    <li style="margin-top: 30px !important;" class="nav-item m-2 me-10"><button (click)="createClicked()" style="background-color: #293462; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0"><i class="fas fa-plus"
+                                style=" margin-right: 5px; font-size: 13px;"></i><span style="font-size: 15px;">Create Folder</span></button></li>
+                    <li style="margin-top: 0px !important; " class="nav-item m-2 "><button (click)="createClicked()" style="background-color:#D61C4E; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0"><i class="fas fa-minus"
+                        style="margin-right: 5px ; font-size: 13px;"></i><span style="font-size: 15px;">Delete Folder</span></button></li>  
+                    <dialog class="dialog-box" [hidden]="isHidden">
+                        <form method="dialog">
+                            <p style="font-size: larger;">Enter Folder Name</p>
+                            <input id="folder-input" type="text" name="folderName" placeholder="  Folder Name">
+                            <menu>
+                                <button (click)="cancelClicked()" class="cancel" value="cancel">Cancel</button>
+                                <button value="default">Create</button>
+                            </menu>
+                        </form>
+                    </dialog>
                 </ul>
-                <div class="text-center d-none d-md-inline"></div>
+                
             </div>
+            
+            
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
