@@ -6,6 +6,8 @@ import com.example.demo.Services.Emails.MailService;
 import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +84,30 @@ public class Controller {
     public String delete(HttpServletRequest request, @PathVariable String folderName){
         String uuid = WebUtils.getCookie(request, "user_id").getValue();
         if(Mail.deleteFolder(uuid, folderName)){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
+    @PostMapping(value = "/moveEmail/{oldFolder}/{newFolder}")
+    public String move(HttpServletRequest request, @PathVariable String oldFolder, @PathVariable String newFolder, @RequestBody String emailID){
+        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+        JSONObject emailIDJson = new JSONObject(emailID);
+        String eID = emailIDJson.getString("emailID");
+        if(Mail.moveEmail(uuid, oldFolder, newFolder, eID)){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
+    @DeleteMapping(value = "/deleteEmail/{folderName}")
+    public String delete(HttpServletRequest request, @PathVariable String folderName, @RequestBody String emailID){
+        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+        JSONObject emailIDJson = new JSONObject(emailID);
+        String eID = emailIDJson.getString("emailID");
+        if(Mail.deleteEmail(uuid, folderName, eID)){
             return "success";
         }else{
             return "error";

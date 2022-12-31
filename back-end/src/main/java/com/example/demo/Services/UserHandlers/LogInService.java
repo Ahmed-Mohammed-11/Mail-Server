@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class LogInService {
-    String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
-
     private DatabaseHandler dbHandler = DatabaseHandler.getInstance();
     private JSONArray users;
 

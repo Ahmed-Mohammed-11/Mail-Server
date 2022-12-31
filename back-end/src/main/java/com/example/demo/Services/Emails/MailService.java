@@ -17,12 +17,12 @@ public class MailService {
         return emails;
     }
 
-    public void deleteEmail(String uuid, String email) {
-        // To Do: Delete email from file
+    public boolean moveEmail(String uuid, String oldFolder, String newFolder , String emailID) {
+        return dbHanlder.moveEmail(uuid, oldFolder, newFolder, emailID);
     }
 
-    public void moveEmail(String uuid, String email) {
-        // To Do: Move email to another folder
+    public boolean deleteEmail(String uuid, String folderName , String emailID) {
+        return dbHanlder.deleteEmail(uuid, folderName, emailID);
     }
 
     public boolean createFolder(String uuid, String folderName) {
@@ -39,10 +39,6 @@ public class MailService {
 
     public void markAsImportant(String uuid, String email) {
         // To Do: Mark email as important
-    }
-
-    public void markAsUnimportant(String uuid, String email) {
-        // To Do: Mark email as unimportant
     }
 
     public void markAsSpam(String uuid, String email) {
