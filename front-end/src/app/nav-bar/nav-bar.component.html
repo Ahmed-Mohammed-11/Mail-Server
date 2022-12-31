@@ -22,26 +22,26 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="#compose"><i class="fas fa-marker"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Compose</span></a></li>
+                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Compose</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="#inbox"><i class="fas fa-inbox"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Inbox</span></a></li>
+                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Inbox</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="#drafts"><i class="fas fa-book"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Drafts</span></a></li>
+                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Drafts</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="#sent"><i class="fab fa-telegram-plane"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Sent</span></a></li>
+                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Sent</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="#trash"><i class="far fa-trash-alt"
-                                style="font-size: 15px;"></i><span style="font-size: 15px;">Trash</span></a></li>
-                    <li style="margin-top: 30px !important;" class="nav-item m-2 me-10"><button (click)="createClicked()" style="background-color: #293462; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0"><i class="fas fa-plus"
-                                style=" margin-right: 5px; font-size: 13px;"></i><span style="font-size: 15px;">Create Folder</span></button></li>
-                    <li style="margin-top: 0px !important; " class="nav-item m-2 "><button (click)="createClicked()" style="background-color:#D61C4E; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0"><i class="fas fa-minus"
-                        style="margin-right: 5px ; font-size: 13px;"></i><span style="font-size: 15px;">Delete Folder</span></button></li>  
+                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Trash</span></a></li>
+                    <li style="margin-top: 30px !important;" class="nav-item m-2 me-10"><button (click)="createClicked()" style="background-color: #293462; border-radius: 10px; " class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-plus"
+                                style=" margin-right: 5px; font-size: 13px;"></i><span class="title" style="font-size: 15px;">Add Folder</span></button></li>
+                    <li style="margin-top: 0px !important; " class="nav-item m-2 "><button (click)="deleteClicked()" style="background-color:#293462; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-minus"
+                        style="margin-right: 5px ; font-size: 13px;"></i><span class="title" style="font-size: 15px;">Remove Folder</span></button></li>  
                     <dialog class="dialog-box" [hidden]="isHidden">
                         <form method="dialog">
                             <p style="font-size: larger;">Enter Folder Name</p>
                             <input id="folder-input" type="text" name="folderName" placeholder="  Folder Name">
                             <menu>
                                 <button (click)="cancelClicked()" class="cancel" value="cancel">Cancel</button>
-                                <button value="default">Create</button>
+                                <button value="default">{{buttonTitle}}</button>
                             </menu>
                         </form>
                     </dialog>

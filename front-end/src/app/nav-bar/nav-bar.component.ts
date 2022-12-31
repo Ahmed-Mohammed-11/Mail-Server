@@ -29,10 +29,18 @@ export class NavBarComponent implements OnInit{
 
 
   isHidden:boolean = true;
+  buttonTitle:string = "";
 
   createClicked() {
-    this.isHidden = !this.isHidden;
+    this.isHidden = false;
     console.log(this.isHidden);
+    this.buttonTitle = "Create";
+  } 
+
+  deleteClicked() {
+    this.isHidden = false;
+    console.log(this.isHidden);
+    this.buttonTitle = "Delete";
   } 
 
   cancelClicked() {

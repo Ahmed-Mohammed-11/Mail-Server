@@ -1,10 +1,5 @@
 body {
-    background: #22c1c3;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #f3f3f3, #f3f3f3);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #f3f3f3, #f3f3f3);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: none;
     height: 100vh;
 }
 
@@ -38,14 +33,10 @@ body {
     border: 1px solid #4e73df;
 }
 
-.discard:hover {
-    background-color: #d21200;
-}
 
 label {
     border: 1px solid #ccc;
     display: inline-block;
-    /* padding: 6px; */
     margin-top: 15px;
     text-align: center;
     vertical-align: middle;
@@ -58,15 +49,21 @@ label {
 .compose-attachments-btn {
     width: 150px;
     float: right;
-    background-color: rgba(0, 0, 0, 0.5);
     border: none;
+    background-color: white;
     border-radius: 5px;
+    color: rgb(69, 69, 69);
+    border: 1px solid rgb(69, 69, 69);
     height: 30px;
     line-height: 30px;
     margin-top: 25px;
     text-align: center;
     align-content: center;
+}
 
+.compose-attachments-btn:hover {
+    background-color: rgb(153, 153, 153);
+    color: white; 
 }
 
 #message {
@@ -78,14 +75,14 @@ label {
     resize: none;
     overflow: hidden;
     outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    background-color: rgba(255, 255, 255, 0.4);
     margin-top: 10px;
 }
+
 
 #sign_up {
     margin-top: 15vh;
 }
+
 
 .small_logo {
     max-width: 175px;
@@ -113,12 +110,12 @@ select {
     border-bottom-width: 1px;
     padding: 6px 10px;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 input:focus {
     outline: none;
-    border-color: #22c1c3;
+    border-color: #4e73df;
 }
 
 button {
@@ -126,7 +123,7 @@ button {
     border-width: 0;
     background-color: #4e73df;
     margin-right: auto;
-    width: 100px;
+    width: 70px;
     height: 30px;
     color: white;
     border-radius: 5px;
@@ -135,8 +132,17 @@ button {
 }
 
 button:hover {
+    background-color: #3961d8;
+}
+
+.discard:hover {
+    background-color: #e81123db;
+    color: white;
+}
+
+.draft:hover {
     background-color: #4e73df;
-    opacity: 0.8;
+    color: white;
 }
 
 .captcha {
