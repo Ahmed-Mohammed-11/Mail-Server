@@ -131,7 +131,6 @@ public class DatabaseHandler {
     public boolean moveEmail(String uuid, String oldFolder, String newFolder, String emailID){
         try {
             File openOld = new File(filePath + uuid + "\\" + oldFolder + "\\" + emailID + ".json");
-            System.out.println(filePath + uuid + "\\" + oldFolder + "\\" + emailID + ".json");
             openOld.renameTo(new File(filePath + uuid + "\\" + newFolder + "\\" + emailID + ".json" ));
             return true;
         }catch (Exception e){
