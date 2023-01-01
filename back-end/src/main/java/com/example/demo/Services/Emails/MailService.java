@@ -10,11 +10,9 @@ import java.io.IOException;
 @Service
 public class MailService {
     private DatabaseHandler dbHanlder = DatabaseHandler.getInstance();
-    private JSONArray emails ;
 
     public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException {
-        emails = dbHanlder.getEmails(uuid, folderName);
-        return emails;
+        return dbHanlder.getEmails(uuid, folderName);
     }
 
     public boolean moveEmail(String uuid, String oldFolder, String newFolder , String emailID) {
