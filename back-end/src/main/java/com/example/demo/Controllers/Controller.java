@@ -31,12 +31,12 @@ public class Controller {
     private ComposeService composeService;
 
     @PostMapping(value = "/register")
-    public String createUser(@RequestBody String user, HttpServletResponse response) throws IOException, ParseException {
+    public String createUser(@RequestBody String user, HttpServletResponse response) throws Exception {
         return registerService.createUser(user, response);
     }
 
     @PostMapping(value = "/login")
-    public Map<String, String> login(@RequestBody String user, HttpServletResponse response, HttpServletRequest request) throws IOException, ParseException{
+    public Map<String, String> login(@RequestBody String user, HttpServletResponse response, HttpServletRequest request) throws Exception{
         Map<String, String> respObj = new HashMap<>();
         if (WebUtils.getCookie(request, "user_id") == null){
             int login = logInService.letUserIn(user, response);
@@ -55,7 +55,7 @@ public class Controller {
     }
 
     @RequestMapping(value="/getEmails/{folderName}", method=RequestMethod.GET)
-    public String getEmails(HttpServletRequest request, @PathVariable String folderName) throws IOException, ParseException{
+    public String getEmails(HttpServletRequest request, @PathVariable String folderName) throws Exception{
         if (WebUtils.getCookie(request, "user_id") != null){
             String uuid = WebUtils.getCookie(request, "user_id").getValue();
             JSONArray emails = Mail.getEmails(uuid, folderName);
@@ -66,7 +66,7 @@ public class Controller {
     }
 
     @PostMapping(value = "/compose")
-    public String compose(@RequestBody String email) throws IOException, ParseException{
+    public String compose(@RequestBody String email) throws Exception{
         return composeService.compose(email);
     }
 

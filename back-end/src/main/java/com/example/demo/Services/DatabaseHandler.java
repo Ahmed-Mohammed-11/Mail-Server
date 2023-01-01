@@ -1,4 +1,5 @@
 package com.example.demo.Services;
+import org.apache.juli.logging.Log;
 import org.json.simple.parser.JSONParser;
 import java.io.*;
 import org.json.JSONArray;
@@ -7,13 +8,21 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.apache.commons.io.FileUtils;
 
 
 public class DatabaseHandler {
-    static String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
+    private static String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\";
     // private String filePath = "D:\\Web\\Mail-Server\\back-end\\src\\main\\java\\com\\example\\demo\\DataBase\\";
     private static JSONArray users ;
+
+    private static Path RegisterSchema = Path.of(filePath + "RegisterSchema.json");
+    private static Path LogInSchema = Path.of(filePath + "LogInSchema.json");
+    private static Path EmailSchema = Path.of(filePath + "EmailSchema.json");
+
 
     //private instance to apply singleton design pattern
     private static final DatabaseHandler dbHandler = new DatabaseHandler();
@@ -24,6 +33,20 @@ public class DatabaseHandler {
         //singleton instance to make sure that just one instance of db is there in the code
         return dbHandler ;
     }
+
+    public String getRegisterSchema() throws IOException {
+        String schema = Files.readString(RegisterSchema);
+        return schema;
+    }
+    public String getLogInSchema() throws IOException {
+        String schema = Files.readString(LogInSchema);
+        return schema;
+    }
+    public String getEmailSchema() throws IOException {
+        String schema = Files.readString(EmailSchema);
+        return schema;
+    }
+
 
     public JSONArray getUsers() throws IOException, ParseException{
         if(users == null){
