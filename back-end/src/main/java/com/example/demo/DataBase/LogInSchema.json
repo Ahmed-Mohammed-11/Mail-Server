@@ -8,8 +8,8 @@
     "properties": {
         "password": {
             "type": "string",
-            "minLength": 8,
-            "maxLength": 32
+            "minLength": 64,
+            "maxLength": 64
         },
         "email": {
             "type": "string",

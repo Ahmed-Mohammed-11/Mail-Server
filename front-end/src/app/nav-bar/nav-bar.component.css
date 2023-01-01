@@ -65,7 +65,9 @@ menu button:hover {
     padding-right: 7px !important;
     margin: 0px;
 }
-
+.nav-item:hover{
+    cursor: pointer;
+}
 @media (max-width: 750px) {
 
     .title {

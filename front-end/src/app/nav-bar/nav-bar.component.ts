@@ -24,7 +24,9 @@ export class NavBarComponent implements OnInit{
         document.getElementById("nav").style.display = "none";
       }
     });
-
+  }
+  public compose(){
+    console.log("compose")
   }
 
 
