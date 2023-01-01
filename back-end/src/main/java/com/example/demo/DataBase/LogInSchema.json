@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+        "password",
+        "email"
+    ],
+    "type": "object",
+    "properties": {
+        "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 32
+        },
+        "email": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
+        }
+    }
+}

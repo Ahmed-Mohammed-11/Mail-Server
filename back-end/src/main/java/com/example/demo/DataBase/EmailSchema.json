@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [
+        "from",
+        "emailID",
+        "to",
+    ],
+    "properties": {
+        "attachments": {
+            "type": "string"
+        },
+        "messageBody": {
+            "type": "string"
+        },
+        "from": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
+        },
+        "emailID": {
+            "type": "string"
+        },
+        "to": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
+        }
+    }
+}
