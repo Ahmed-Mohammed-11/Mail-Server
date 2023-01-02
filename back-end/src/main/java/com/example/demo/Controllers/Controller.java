@@ -38,18 +38,13 @@ public class Controller {
     @PostMapping(value = "/login")
     public Map<String, String> login(@RequestBody String user, HttpServletResponse response, HttpServletRequest request) throws Exception{
         Map<String, String> respObj = new HashMap<>();
-        if (WebUtils.getCookie(request, "user_id") == null){
-            int login = logInService.letUserIn(user, response);
-            if (login == 200) {
-                respObj.put("status", "success");
-            } else {
-                respObj.put("status", "failed");
-                respObj.put("reason", "User not found");
-            }
-        }
-        else{
+        String login = logInService.letUserIn(user, response);
+        if (login.length() != 3) {
+            respObj.put("status", "success");
+            respObj.put("uuid", login);
+        } else {
             respObj.put("status", "failed");
-            respObj.put("reason", "User already logged in");
+            respObj.put("reason", "User not found");
         }
         return respObj;
     }

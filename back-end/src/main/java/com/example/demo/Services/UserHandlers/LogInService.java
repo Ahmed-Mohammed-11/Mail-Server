@@ -15,7 +15,7 @@ public class LogInService {
     private SchemaValidator schemaValidator = SchemaValidator.getInstance() ;
     private String schema ;
 
-    public int letUserIn(String user, HttpServletResponse response) throws Exception {
+    public String letUserIn(String user, HttpServletResponse response) throws Exception {
 
         schema = dbHandler.getLogInSchema();
         if (schemaValidator.validate(schema, user)) {
@@ -31,11 +31,11 @@ public class LogInService {
                 if (elementInArray.get("email").equals(userJson.get("email"))) {
                     if (elementInArray.get("password").equals(userJson.get("password"))) {
                         String UUID = elementInArray.get("uuid").toString();
-                        response.setHeader("Set-Cookie", "user_id=" + UUID + "; Path=/");
-                        return 200;
+                        // response.setHeader("Set-Cookie", "user_id=" + UUID + "; Path=/");
+                        return UUID;
                     }
                 }
-            }return 404;
-        }return 403;
+            } return "404";
+        } return "403";
     }
 }

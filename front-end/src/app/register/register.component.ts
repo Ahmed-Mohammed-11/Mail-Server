@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RegisterService} from "../services/register.service";
 const shajs = require('sha.js');
 
+// 7a8da028-af7f-4175-b063-e659a42d554e
 
 @Component({
   selector: 'app-register',
@@ -62,8 +63,8 @@ const shajs = require('sha.js');
     else if(pass!=cpass){
       this.error1 = "please enter a correct password";
     }
-    else if(cap!="EmbabyTeCh"){
-      this.error1 = "wrong captcha";
+    else if(cap?.toLowerCase() !="embabytech"){
+      this.error1 = "Captcha is incorrect";
     }
     else {
       pass = shajs('sha256').update(pass).digest('hex');

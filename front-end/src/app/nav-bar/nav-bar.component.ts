@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {FolderService} from "../services/folder.service";
 
 @Component({
@@ -10,22 +10,30 @@ import {FolderService} from "../services/folder.service";
 export class NavBarComponent implements OnInit{
   page = "compose";
   empage = false;
+  uuid = "";
+  
   constructor(
       private rouv :ActivatedRoute,
+      private router: Router,
       private myfolder : FolderService
   ) {
   }
   ngOnInit() {
     this.rouv.queryParams.subscribe((params:any)=>{
-      //console.log(params.data1);
-      if (params.data1==="true"||params.data2==="true"){
-        // @ts-ignore
-        document.getElementById("nav").style.display = "block";
+      if (window.location.href.includes('uuid=')){
+        this.uuid = window.location.href.split('uuid=')[1].split('&')[0];
       }
-      else {
+      if (this.uuid.length != 36){
+        // HIDE NAVBAR
         // @ts-ignore
         document.getElementById("nav").style.display = "none";
+        this.router.navigate(["/login"]);
+        return;
       }
+
+      // SHOW NAVBAR
+      // @ts-ignore
+      document.getElementById("nav").style.display = "block";
     });
   }
   public compose(){

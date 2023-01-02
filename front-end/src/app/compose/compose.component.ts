@@ -13,7 +13,6 @@ export class ComposeComponent {
   ) {
   }
   ngOnInit() {
-
   }
   public send(){
     let to = (document.getElementById('to') as HTMLInputElement | null)?.value;
@@ -21,11 +20,13 @@ export class ComposeComponent {
     let message = (document.getElementById('message') as HTMLInputElement | null)?.value;
     let attachment = (document.getElementById('attachment') as HTMLInputElement | null)?.value;
     let from = localStorage.getItem('email');
+    let uuid = window.location.href.split('uuid=')[1].split('&')[0];
     let mail = {
       "from":from,
       "emailID":this.EmailId.toString(),
       "to":to,
-      "messageBody":message
+      "messageBody": message,
+      "uuid": uuid
     }
     ++this.EmailId;
     console.log(mail);
