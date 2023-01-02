@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {RegisterService} from "../services/register.service";
 const shajs = require('sha.js');
 
 
@@ -12,7 +13,8 @@ const shajs = require('sha.js');
   error1 :string = '';
   regpage:boolean = true;
   constructor(
-      private rou :ActivatedRoute,private router: Router
+      private rou :ActivatedRoute,private router: Router,
+      private registerser : RegisterService
   ) {
   }
   ngOnInit() {
@@ -31,6 +33,7 @@ const shajs = require('sha.js');
   }
 
   log() {
+    document.getElementsByClassName("error_message")[0].innerHTML = this.error1 ;
     let firstname = (document.getElementById('first') as HTMLInputElement | null)?.value;
     let secondname = (document.getElementById('second') as HTMLInputElement | null)?.value;
     let email = (document.getElementById('email') as HTMLInputElement | null)?.value;
@@ -66,20 +69,29 @@ const shajs = require('sha.js');
       pass = shajs('sha256').update(pass).digest('hex');
       // @ts-ignore
       email = email?.concat(aemail.toString());
-      let pdata = [firstname,secondname,email,pass];
-      JSON.stringify(pdata);
+      let pdata = {
+        "firstname" :firstname,
+        "lastname":secondname,
+        "email":email,
+        "password":pass,
+      };
+      this.registerser.register(pdata).subscribe(data=>{
+        if(data!="this email is already taken") {
+          this.router.navigate(["/nav-bar/"], {queryParams: {data2: "true"}});
+          // @ts-ignore
+          document.getElementById("register").style.display = "none";
+          localStorage.setItem('email' , String(email));
+        }
+        else{
+          this.error1 = "email is already used"
+        }
+      },error => {
+        console.log(error);
+      });
       let state ="available";
-      if(state==="available") {
-        this.router.navigate(["/nav-bar/"], {queryParams: {data2: "true"}});
-        // @ts-ignore
-        document.getElementById("register").style.display = "none";
-      }
-      else{
-        this.error1 = "email is already used"
-      }
+
     }
-    console.log(pass);
-    console.log(email);
+    document.getElementsByClassName("error_message")[0].innerHTML = this.error1 ;
     console.log(this.error1);
   }
 }

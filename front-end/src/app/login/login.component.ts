@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {LoginService} from "../services/login.service";
 const shajs = require('sha.js');
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit{
   }
 
   constructor(
-      private router :Router,private rou:ActivatedRoute
+      private router :Router,private rou:ActivatedRoute,
+      private serve :LoginService
   ) {
   }
 
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit{
     // @ts-ignore
   }
   login() {
+    document.getElementsByClassName("error_message1")[0].innerHTML = this.error;
     let email = (document.getElementById('emaill') as HTMLInputElement | null)?.value;
     let pass = (document.getElementById('passl') as HTMLInputElement | null)?.value;
     if (email===null||email===''){
@@ -42,17 +45,28 @@ export class LoginComponent implements OnInit{
     }
     else{
       pass = shajs('sha256').update(pass).digest('hex');
-      let pdata = [email,pass];
-      JSON.stringify(pdata);
-      console.log(this.error);
-      console.log(pdata);
-      let state = "available";
-      if(state==="available") {
-        this.router.navigate(["/nav-bar"], {queryParams: {data1: "true"}});
-        // @ts-ignore
-       // document.getElementById("log").style.display = "none";
-        
-      }
+      let pdata ={
+        "email":email,
+        "password":pass,
+      };
+      this.serve.login(pdata).subscribe(data=>{
+        console.log(data.status);
+        if(data.status==="success") {
+          this.router.navigate(["/nav-bar"], {queryParams: {data1: "true"}});
+          localStorage.setItem('email' , String(email));
+          // @ts-ignore
+          // document.getElementById("log").style.display = "none";
+        }
+        else {
+          this.error = "wrong username or password";
+        }
+      },error => {
+        console.log(error);
+      });
+      //console.log(pdata);
     }
+    document.getElementsByClassName("error_message1")[0].innerHTML = this.error;
+    console.log(this.error);
+
   }
 }

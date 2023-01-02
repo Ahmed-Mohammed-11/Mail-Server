@@ -4,7 +4,8 @@
     "required": [
         "from",
         "emailID",
-        "to"
+        "to",
+        "messageBody"
     ],
     "properties": {
         "attachments": {
