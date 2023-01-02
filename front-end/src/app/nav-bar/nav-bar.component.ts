@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {FolderService} from "../services/folder.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +8,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit{
+  page = "compose";
   empage = false;
   constructor(
-      private rouv :ActivatedRoute
+      private rouv :ActivatedRoute,
+      private myfolder : FolderService
   ) {
   }
   ngOnInit() {
@@ -26,9 +29,25 @@ export class NavBarComponent implements OnInit{
     });
   }
   public compose(){
-    console.log("compose")
+    this.page= "compose";
+    console.log(this.page);
   }
-
+  public inbox(){
+    this.page = "inbox";
+    console.log(this.page);
+  }
+  public draft(){
+    this.page= "draft";
+    console.log(this.page);
+  }
+  public sent (){
+    this.page = "sent"
+    console.log(this.page);
+  }
+  public trash(){
+    this.page= "trash";
+    console.log(this.page);
+  }
 
   isHidden:boolean = true;
   buttonTitle:string = "";
@@ -43,7 +62,25 @@ export class NavBarComponent implements OnInit{
     this.isHidden = false;
     console.log(this.isHidden);
     this.buttonTitle = "Delete";
-  } 
+  }
+  folder(){
+    let name = (document.getElementById('folder-input') as HTMLInputElement | null)?.value;
+    if (name != null&&name!='') {
+      if (this.buttonTitle === "Create") {
+        console.log(this.buttonTitle);
+        let from = localStorage.getItem('email');
+        this.myfolder.create(name,String(from)).subscribe(data=>{
+          console.log(data);
+        },error => {
+          console.log(error);
+        });
+      }
+      else {
+        console.log(this.buttonTitle);
+      }
+      this.isHidden = true;
+    }
+  }
 
   cancelClicked() {
     this.isHidden = true;
