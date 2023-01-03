@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../services/login.service";
-import { CookieService } from 'ngx-cookie-service';
 const shajs = require('sha.js');
 
 @Component({

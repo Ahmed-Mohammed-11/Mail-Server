@@ -31,6 +31,10 @@ public class MailService {
         return dbHanlder.deleteFolder(uuid, folderName);
     }
 
+    public String[] getFolders(String uuid) {
+        return dbHanlder.getFolders(uuid);
+    }
+
     public void markAsRead(String uuid, String email) {
         // To Do: Mark email as read
     }

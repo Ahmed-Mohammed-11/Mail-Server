@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>E-Service | Inbox</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="/assets/css/styles.min.css">
@@ -21,21 +21,28 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active"  (click)="compose()"><i class="fas fa-marker"
-                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Compose</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" (click)="inbox()"><i class="fas fa-inbox"
-                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Inbox</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" (click)="draft()"><i class="fas fa-book"
-                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Drafts</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" (click)="sent()"><i class="fab fa-telegram-plane"
-                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Sent</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" (click)="trash()"><i class="far fa-trash-alt"
-                                style="font-size: 15px;"></i><span class="title" style="font-size: 15px;">Trash</span></a></li>
-                    <li style="margin-top: 30px !important;" class="nav-item m-2 me-10"><button (click)="createClicked()" style="background-color: #293462; border-radius: 10px; " class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-plus"
-                                style=" margin-right: 5px; font-size: 13px;"></i><span class="title" style="font-size: 15px;">Add Folder</span></button></li>
-                    <li style="margin-top: 0px !important; " class="nav-item m-2 "><button (click)="deleteClicked()" style="background-color:#293462; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-minus"
-                        style="margin-right: 5px ; font-size: 13px;"></i><span class="title" style="font-size: 15px;">Remove Folder</span></button></li>  
-                    <dialog class="dialog-box" [hidden]="isHidden">
+
+                    <li class="nav-item"><a class="nav-link active"  (click)="setCurrentPage('compose')"><i class="fas fa-marker"
+                        style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">Compose</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" (click)="setCurrentPage('inbox')"><i class="fas fa-inbox"
+                        style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">Inbox</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" (click)="setCurrentPage('drafts')"><i class="fas fa-book"
+                        style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">Drafts</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" (click)="setCurrentPage('sent')"><i class="fab fa-telegram-plane"
+                        style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">Sent</span></a></li>
+                        <li class="nav-item"><a class="nav-link active" (click)="setCurrentPage('trash')"><i class="far fa-trash-alt"
+                            style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">Trash</span></a></li>
+                            
+                            <li *ngFor="let folder of folders;" class="nav-item">
+                                <a class="nav-link active"  (click)="setCurrentPage(folder)"><i class="fas fa-inbox"
+                                    style="font-size: 15px;"></i><span class="title" style="font-size: 15px; margin-left: 15px;">{{folder}}</span></a>
+                                </li>
+                    
+                                <li style="margin-top: 30px !important;" class="nav-item m-2 me-10"><button (click)="createClicked()" style="background-color: #293462; border-radius: 10px; " class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-plus"
+                                style=" margin-right: 5px; font-size: 13px;"></i><span class="title" style="font-size: 15px;">New Folder</span></button></li>
+                                <li style="margin-top: 0px !important; " class="nav-item m-2 "><button (click)="deleteClicked()" style="background-color:#293462; border-radius: 10px;" class="c-d btn btn-primary p-2 m-0 buttons"><i class="fas fa-minus"
+                        style="margin-right: 5px ; font-size: 13px;"></i><span class="title" style="font-size: 15px;">Delete Folder</span></button></li>  
+                        <dialog class="dialog-box" [hidden]="isHidden">
                         <form method="dialog">
                             <p style="font-size: larger;">Enter Folder Name</p>
                             <input id="folder-input" type="text" name="folderName" placeholder="  Folder Name">
@@ -55,32 +62,121 @@
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
-                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small shadow-none" type="text"
-                                    placeholder="Search for ..." style="border-style:none;"><button class="btn btn-primary py-0" type="button"><i
-                                        class="fas fa-search"></i></button></div>
-                        </form>
-                        <ul class="navbar-nav flex-nowrap ms-auto">
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                        </ul>
-                        <div class="dropdown"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
-                                href="#" style="text-decoration: none;font-size: 18px;">Sort</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">First Item</a>
-                                <a class="dropdown-item" href="#">Second Item</a>
-                                <a class="dropdown-item" href="#">Third Item</a></div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+                        id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input class="bg-light form-control border-0 small shadow-none" type="text"
+                                placeholder="Search for ..." style="border-style:none;" id="search" (change)="search_for()">
+                                
+                                <button class="btn btn-primary py-0" type="button" disabled>
+                                    <i class="fas fa-search"></i></button></div>
 
-            <app-compose *ngIf="page=='compose'"></app-compose>
+                                </div>
+                                <ul class="navbar-nav flex-nowrap ms-auto">
+                                    <div class="d-none d-sm-block topbar-divider"></div>
+                                </ul>
+                                <div>
+                                    <select name="sort" id="sort" (change)="sortEmails()">
+                                        <option value="0">Sort By</option>
+                                        <option value="1">Priority</option>
+                                        <option value="2">Date</option>
+                                        <option value="3">Sender Email</option>
+                                      </select>
+                                </div>
+                                </div>
+                            </nav>
+                            <span style="font-size: 14px; color: orangered; margin-left: 15px;">> Viewing {{this.page}}</span>
+                            <div *ngIf="display!=''" class="alert alert-success" role="alert">{{display}}</div>
+                            
+                            <!-- List of Emails -->
+                            <div *ngFor="let email of results;" class="row" style="height: 60px;" (click)="setCurrentPage('preview')">
+                                <div class="col col-lg-2">
+                                    <p class="title">{{email.from_fullname}}<br><span class="email">({{email.from}})</span></p>
+                                </div>
+                                
+                                <div class="col col-lg-1" style="margin-top: 15px;">
+                                    <img class="info-img active" width="20px" src="/assets/img/alert.png">
+                                    <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                    <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                    <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                    <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                </div>
+                            
+                                <div class="col col-lg-7" style="margin-top: 5px;">
+                                    <span class="subject">{{email.subject}}</span><br>
+                                    <span class="content-short">{{email.messageBody}}...</span>
+                                </div>
+                                
+                                <div class="col col-lg-2" style="text-align: center;">
+                                    <span class="time">{{email.datetime}}</span>
+                                    <br>
+                                    <img class="delete-img" width="20px" src="/assets/img/delete.png">
+                                </div>
+                            </div>
+                            <!-- End of List of Emails -->
 
-        </div>
+                            <!-- Compose Component -->
+                            <div *ngIf="page=='compose'" id="compose" style="z-index: 10">
+                                <input class="compose-input" type="text" id="to" placeholder="To" />
+                                <input class="compose-input" type="text" id="subject" placeholder="Subject" />
+                                <textarea id="message" ></textarea>
+                                <button class="compose-btn send" (click)="send()">Send</button>
+                                <button class="compose-btn draft" (click)="draft()">Draft</button>
+                                <button class="compose-btn discard" (click)="setCurrentPage('inbox')">Cancel</button>
+                                <label class="label-compose compose-btn compose-attachments-btn"><img src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/attach_file_baseline_nv700_20dp.png">Attachments
+                                    <input type="file" id="attachment" class="compose-btn compose-attachments-btn" style="display: none;">
+                                </label>
+                            </div>
+                            <!-- End of Compose Component -->
+                            
+                            <!-- Email Preview Component -->
+                            <div *ngIf="page=='preview'" id="preview" style="z-index: 10; width: 50vw">
+
+                                <h2>SUBJECT</h2>
+                                <p>mahmoud@embaby.tech</p>
+                                <p style="font-size: 12px; float: right;">1/3/2023 10:32:11 PM</p><br>
+                                <hr>
+                                <p>MESSAGE CONTENT</p>
+                                <hr>
+                                <div>Priority:
+                                    <div>
+                                        <img class="info-img active" width="20px" src="/assets/img/alert.png">
+                                        <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                        <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                        <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                        <img class="info-img" width="20px" src="/assets/img/alert.png">
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <button class="compose-btn send" >Reply</button>
+                                <label class="label-compose compose-btn compose-attachments-btn"><img src="https://ssl.gstatic.com/ui/v1/icons/mail/gm3/1x/attach_file_baseline_nv700_20dp.png">Attachments</label>
+                                <button class="compose-btn discard" (click)="setCurrentPage('inbox')">Close</button>
+                                <button class="compose-btn discard" >PREVIOUS</button>
+                                <button class="compose-btn discard" >NEXT</button>
+                            </div>
+                            <!-- Email Preview Component -->
+                            <div *ngIf="page=='compose' || page=='preview'" class="glass"></div>
+                            
+
+                            <div *ngIf="results.length==0" style="position: absolute; top: 49%; left: 49%">
+                                <img src="/assets/img/empty.png">
+                                <br>
+                                No Emails
+                            </div>
+                            
+    
+    <div *ngIf="results.length > 0" id="pagination">
+        <p style="margin: 15px;">Showing 10 of 30 results</p>
+        <nav style=" display: flex; justify-content: center; margin-top: 30px;">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+            </ul>
+        </nav>
     </div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
-</body>
-
-</html>

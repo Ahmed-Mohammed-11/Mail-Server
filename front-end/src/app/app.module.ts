@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ComposeComponent } from './compose/compose.component';
 import { CookieService } from 'ngx-cookie-service';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CookieService } from 'ngx-cookie-service';
     NavBarComponent,
     LoginComponent,
     RegisterComponent,
-    ComposeComponent
+    ComposeComponent,
+    ListComponent
   ],
   imports: [
     HttpClientModule,

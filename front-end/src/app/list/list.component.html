@@ -1,0 +1,30 @@
+<div *ngFor="let email of results;" class="row" style="height: 60px;">
+    <div class="col col-lg-2">
+        <p class="title">{{email.from_fullname}}<br><span class="email">({{email.from}})</span></p>
+    </div>
+    
+    <div class="col col-lg-1" style="margin-top: 15px;">
+        <img class="info-img active" width="20px" src="/assets/img/alert.png">
+        <img class="info-img" width="20px" src="/assets/img/alert.png">
+        <img class="info-img" width="20px" src="/assets/img/alert.png">
+        <img class="info-img" width="20px" src="/assets/img/alert.png">
+        <img class="info-img" width="20px" src="/assets/img/alert.png">
+    </div>
+
+    <div class="col col-lg-7" style="margin-top: 5px;">
+        <span class="subject">{{email.subject}}</span><br>
+        <span class="content-short">{{email.messageBody}}...</span>
+    </div>
+    
+    <div class="col col-lg-2" style="text-align: center;">
+        <span class="time">{{email.datetime}}</span>
+        <br>
+        <img class="delete-img" width="20px" src="/assets/img/delete.png">
+    </div>
+</div>
+
+<!-- <div *ngIf="results==null" style="position: absolute; left: 49%; top: 49%;">
+    <img src="/assets/img/empty.png" >
+    <br>
+    <span style="font-size: 20px; color: #293462;">No Mails</span>
+</div> -->

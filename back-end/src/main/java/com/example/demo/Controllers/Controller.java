@@ -49,10 +49,9 @@ public class Controller {
         return respObj;
     }
 
-    @RequestMapping(value="/getEmails/{folderName}", method=RequestMethod.GET)
-    public String getEmails(HttpServletRequest request, @PathVariable String folderName) throws Exception{
-        if (WebUtils.getCookie(request, "user_id") != null){
-            String uuid = WebUtils.getCookie(request, "user_id").getValue();
+    @RequestMapping(value="/getEmails/{uuid}/{folderName}", method=RequestMethod.GET)
+    public String getEmails(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName) throws Exception{
+        if (uuid != null){
             JSONArray emails = Mail.getEmails(uuid, folderName);
             return emails.toString();
         } else {
@@ -65,9 +64,8 @@ public class Controller {
         return composeService.compose(email);
     }
 
-    @PostMapping(value = "/createFolder/{folderName}")
-    public String create(HttpServletRequest request, @PathVariable String folderName){
-        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+    @PostMapping(value = "/createFolder/{uuid}/{folderName}")
+    public String create(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName){
         if(Mail.createFolder(uuid, folderName)){
             return "success";
         }else{
@@ -82,6 +80,16 @@ public class Controller {
             return "success";
         }else{
             return "error";
+        }
+    }
+
+    @GetMapping(value = "/getFolders/{uuid}")
+    public String[] getFolders(HttpServletRequest request, @PathVariable String uuid){
+        if (uuid != null){
+            String[] folders = Mail.getFolders(uuid);
+            return folders;
+        } else {
+            return null;
         }
     }
 

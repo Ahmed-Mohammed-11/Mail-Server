@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.FilenameFilter;
 
 import org.apache.commons.io.FileUtils;
 
@@ -88,7 +89,6 @@ public class DatabaseHandler {
     public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException{
 
         File userDirectory = new File(filePath + uuid + "\\" + folderName);
-        System.out.println(userDirectory);
 
         //File array to loop through all files in a given directory
         File[] directoryListing = userDirectory.listFiles();
@@ -100,14 +100,12 @@ public class DatabaseHandler {
                 //take the file name and open the file to get its content
                 FileReader file = new FileReader(child);
                 Object loaded = parser.parse(file);
-                System.out.println(loaded);
                 emails.put(loaded);
             }
         } else {
             return null;
         }
 
-        System.out.println(emails);
         return emails;
     }
 
@@ -148,6 +146,33 @@ public class DatabaseHandler {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public String[] getFolders(String uuid){
+        
+        try {
+            File file = new File(filePath + uuid);
+            String[] directories = file.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+            }
+            });
+            
+            String[] directories_filtered = new String[directories.length - 4];
+            int j = 0;
+            for (int i = 0; i < directories.length; i++) {
+                if(!directories[i].equals("inbox") && !directories[i].equals("sent") && !directories[i].equals("drafts") && !directories[i].equals("trash")){
+                    directories_filtered[j] = directories[i];
+                    j += 1;
+                }
+            }
+
+            return directories_filtered;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 

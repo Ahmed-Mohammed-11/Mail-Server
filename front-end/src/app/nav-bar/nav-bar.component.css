@@ -20,14 +20,17 @@ li a:hover {
     color: white;
 }
 
-
-menu button {
-    border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 5px;
-    background-color: #4e73df;
-    color: white;
+.glass{
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    top: 0;
+    position: absolute;
+    content: '';
+    background: inherit;
+    box-shadow: inset 0 0 0 3000px rgba(150, 150, 150, 0.592);
+    filter: blur(10px);
+    border-radius: 15px;
 }
 
 .cancel {
@@ -83,4 +86,215 @@ menu button:hover {
     li button i {
         margin-right: 0px !important;
     }
+}
+
+.row {
+    margin: 0 15px 0 15px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.row:hover{
+    background-color: rgb(255, 255, 255);
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.email{
+    font-size: 14px;
+    color: rgb(180, 180, 180);
+}
+
+.info-img{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.info-img:hover, .active{
+    -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
+}
+
+.delete-img{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.delete-img:hover{
+    -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
+}
+
+.time{
+    font-size: 12px;
+}
+
+.subject{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.row:hover{
+    color: rgba(40, 40, 40);
+}
+
+.content-mini{
+    font-size: 12px;
+    color: rgb(180, 180, 180);
+}
+
+
+/* STOP HERE */
+
+#compose, #preview {
+    position: absolute;
+    top: 5vh;
+    left: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+    height: 80%;
+    padding: 44px;
+    margin-top: 5vh;
+    background: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.compose-btn {
+    margin-right: 15px;
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+.discard {
+    background-color: white;
+    color: black;
+    border: 1px solid #e81123db;
+}
+
+.draft {
+    background-color: white;
+    color: black;
+    border: 1px solid #4e73df;
+}
+
+
+.label-compose {
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-top: 15px;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+
+}
+
+.compose-attachments-btn {
+    width: 150px;
+    float: right;
+    border: none;
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(69, 69, 69);
+    border: 1px solid rgb(69, 69, 69);
+    height: 30px;
+    line-height: 30px;
+    margin-top: 25px;
+    text-align: center;
+    align-content: center;
+}
+
+.compose-attachments-btn:hover {
+    background-color: rgb(153, 153, 153);
+    color: white; 
+}
+
+#message {
+    height: 78%;
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    font-size: 16px;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    margin-top: 10px;
+}
+
+
+#sign_up {
+    margin-top: 15vh;
+}
+
+
+.small_logo {
+    max-width: 175px;
+    margin-bottom: 30px;
+
+}
+
+h4 {
+    margin-bottom: 15px;
+}
+
+h5 {
+    color: #e81123;
+    font-size: 16px;
+}
+
+.compose-input,
+.compose-select {
+    border-color: rgba(0, 0, 0, 0.3);
+    height: 36px;
+    background-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    border-bottom-width: 1px;
+    padding: 6px 10px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.compose-input:focus {
+    outline: none;
+    border-color: #4e73df;
+}
+
+.compose-btn {
+    margin-top: 25px;
+    border-width: 0;
+    background-color: #4e73df;
+    margin-right: auto;
+    width: 70px;
+    height: 30px;
+    color: white;
+    border-radius: 5px;
+    right: 10px;
+    float: left;
+}
+
+.compose-btn:hover {
+    background-color: #3961d8;
+}
+
+.discard:hover {
+    background-color: #e81123db;
+    color: white;
+}
+
+.draft:hover {
+    background-color: #4e73df;
+    color: white;
+}
+
+.captcha {
+    max-width: 200px;
 }
