@@ -298,3 +298,9 @@ h5 {
 .captcha {
     max-width: 200px;
 }
+
+@media (max-width: 940px) {
+    .time{
+        font-size: 7px;
+    }
+}

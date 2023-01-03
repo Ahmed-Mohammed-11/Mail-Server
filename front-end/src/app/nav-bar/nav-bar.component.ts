@@ -80,6 +80,7 @@ export class NavBarComponent implements OnInit{
     console.log(this.isHidden);
     this.buttonTitle = "Delete";
   }
+  
   folder(){
     let name = (document.getElementById('folder-input') as HTMLInputElement | null)?.value;
     if (name != null&&name!='') {
