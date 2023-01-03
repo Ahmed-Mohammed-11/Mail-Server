@@ -36,7 +36,7 @@ public class Controller {
     }
 
     @PostMapping(value = "/login")
-    public Map<String, String> login(@RequestBody String user, HttpServletResponse response, HttpServletRequest request) throws Exception{
+    public Map<String, String> login(@RequestBody String user, HttpServletResponse response) throws Exception{
         Map<String, String> respObj = new HashMap<>();
         String login = logInService.letUserIn(user, response);
         if (login.length() != 3) {
@@ -50,7 +50,7 @@ public class Controller {
     }
 
     @RequestMapping(value="/getEmails/{uuid}/{folderName}", method=RequestMethod.GET)
-    public String getEmails(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName) throws Exception{
+    public String getEmails( @PathVariable String uuid, @PathVariable String folderName) throws Exception{
         if (uuid != null){
             JSONArray emails = Mail.getEmails(uuid, folderName);
             return emails.toString();

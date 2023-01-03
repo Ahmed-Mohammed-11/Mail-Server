@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RegisterService} from "../services/register.service";
 const shajs = require('sha.js');
@@ -11,6 +11,7 @@ const shajs = require('sha.js');
   styleUrls: ['./register.component.css']
 })
   export class RegisterComponent implements OnInit{
+  @Output() nameEmitterr = new EventEmitter < string > ();
   error1 :string = '';
   regpage:boolean = true;
   constructor(
@@ -19,18 +20,9 @@ const shajs = require('sha.js');
   ) {
   }
   ngOnInit() {
-    this.rou.queryParams.subscribe((params:any)=>{
-      console.log(params);
-      if (params.data1==="false"){
-        //console.log("register");
-        // @ts-ignore
-        document.getElementById("register").style.display = "block";
-      }
-      else {
-        // @ts-ignore
-        document.getElementById("register").style.display = "none";
-      }
-    });
+  }
+  login(){
+    this.nameEmitterr.emit("login");
   }
 
   log() {
@@ -79,6 +71,7 @@ const shajs = require('sha.js');
       this.registerser.register(pdata).subscribe(data=>{
         if(data!="this email is already taken") {
           this.router.navigate(["/nav-bar/"], {queryParams: {data2: "true"}});
+          this.nameEmitterr.emit("nav");
           // @ts-ignore
           document.getElementById("register").style.display = "none";
           localStorage.setItem('email' , String(email));

@@ -8,10 +8,17 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'mail-server';
+  pagec = "login";
 
   constructor(private router: Router) { }
 
   goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
+  }
+  receive_from_reg($event: string) {
+    this.pagec = $event;
+  }
+  receive_from_log($event: string) {
+    this.pagec = $event;
   }
 }

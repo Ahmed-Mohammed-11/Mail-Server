@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../services/login.service";
 const shajs = require('sha.js');
@@ -9,6 +9,7 @@ const shajs = require('sha.js');
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
+  @Output() nameEmitterl = new EventEmitter < string > ();
   error: string = '';
   ngOnInit() {}
 
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit{
   }
 
   register(){
-    this.router.navigate(["/main/"],{queryParams:{data1:"false"}});
+    this.nameEmitterl.emit("register");
     // @ts-ignore
   }
 
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit{
         if(data.status==="success") {
           this.router.navigate(["/main"], {queryParams: {uuid: data.uuid}});
           localStorage.setItem('email' , String(email));
+          this.nameEmitterl.emit("nav");
         }
         else {
           this.error = "Invalid username or password";

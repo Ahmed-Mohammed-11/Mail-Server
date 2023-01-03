@@ -1,4 +1,4 @@
-<app-register></app-register>
-<app-nav-bar></app-nav-bar>
-<app-login></app-login>
+<app-register *ngIf="this.pagec==='register' " (nameEmitterr)="receive_from_reg($event)"></app-register>
+<app-nav-bar *ngIf="this.pagec==='nav'"></app-nav-bar>
+<app-login *ngIf="this.pagec==='login'" (nameEmitterl)="receive_from_log($event)" ></app-login>
 <!-- <app-compose></app-compose> -->

@@ -31,7 +31,7 @@
         <img class="captcha" src="/assets/img/CAPTCHA.png">
         <input type="text" id="cap" placeholder="Solve Captcha" style="width: 50%;" />
         
-        <h6>Already have an account? <a href="/register">Sign in!</a></h6>
+        <h6>Already have an account? <span style="color: blue; cursor: pointer;" (click)="login()">Sign in!</span></h6>
         <button type="submit"(click)="log()">Sign In</button>
     </div>
 

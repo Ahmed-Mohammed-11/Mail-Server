@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FolderService } from "../services/folder.service";
 import { GetEmailsService } from "../services/get-emails.service";
 import { ComposeService } from "../services/compose.service";
+import {ListService} from "../services/list.service";
 
 // Returns a random integer number less than max
 function getRandomInt(max: number) {
@@ -30,6 +31,7 @@ export class NavBarComponent implements OnInit{
       private myfolder: FolderService,
       private emails: GetEmailsService,
       private serve: ComposeService,
+      private emailfolder :ListService,
   ) {
   }
   ngOnInit() {
@@ -40,8 +42,6 @@ export class NavBarComponent implements OnInit{
       }
       if (this.uuid.length != 36 && !window.location.href.includes('register')){
         // @ts-ignore
-        document.getElementById("nav").style.display = "none";
-        this.router.navigate(["/login"]);
         return;
       }
 
@@ -50,7 +50,6 @@ export class NavBarComponent implements OnInit{
       } else {
         // SHOW NAVBAR
         // @ts-ignore
-        document.getElementById("nav").style.display = "block";
         this.getFolders();
         this.getEmails("inbox");
         this.email_preview = this.results[0];

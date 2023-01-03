@@ -12,7 +12,6 @@ export class LoginService {
     const headers = { 'content-type': 'application/json'}
     console.log("create")
     let response = this.http.post(this.baseURL + 'login', JSON.stringify(pdata), {'headers': headers, responseType: 'json'});
-    console.log(response.subscribe());
     return response;
   }
 }
