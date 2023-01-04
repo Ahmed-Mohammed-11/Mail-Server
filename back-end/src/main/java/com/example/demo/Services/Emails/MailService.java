@@ -12,7 +12,6 @@ public class MailService {
     private DatabaseHandler dbHanlder = DatabaseHandler.getInstance();
     private ComposeService composeService = new ComposeService() ;
 
-
     public String compose(String email) throws Exception{return composeService.compose(email);}
 
     public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException {
@@ -31,6 +30,10 @@ public class MailService {
         return dbHanlder.createFolder(uuid, folderName);
     }
 
+    public boolean renameFolder(String uuid, String oldFolderName, String newFolderName) {
+        return dbHanlder.renameFolder(uuid, oldFolderName, newFolderName);
+    }
+
     public boolean deleteFolder(String uuid, String folderName) {
         return dbHanlder.deleteFolder(uuid, folderName);
     }
@@ -38,5 +41,6 @@ public class MailService {
     public String[] getFolders(String uuid) {
         return dbHanlder.getFolders(uuid);
     }
+
 
 }

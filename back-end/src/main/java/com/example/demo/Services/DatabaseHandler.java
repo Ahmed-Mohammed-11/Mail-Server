@@ -183,7 +183,16 @@ public class DatabaseHandler {
         }
     }
 
+    public boolean renameFolder(String uuid, String oldFolderName, String newFolderName) {
+        File old = new File(filePath + uuid + "\\" +  oldFolderName);
+        File newOne = new File(filePath + uuid + "\\" + newFolderName);
 
+        if(old.renameTo(newOne)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     public boolean deleteFolder(String uuid, String folderName){

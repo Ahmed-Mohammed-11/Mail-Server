@@ -64,19 +64,10 @@ public class Controller {
         return Mail.compose(email);
     }
 
+
     @PostMapping(value = "/createFolder/{uuid}/{folderName}")
     public String create(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName){
         if(Mail.createFolder(uuid, folderName)){
-            return "success";
-        }else{
-            return "error";
-        }
-    }
-
-    @DeleteMapping(value = "/deleteFolder/{folderName}")
-    public String delete(HttpServletRequest request, @PathVariable String folderName){
-        String uuid = WebUtils.getCookie(request, "user_id").getValue();
-        if(Mail.deleteFolder(uuid, folderName)){
             return "success";
         }else{
             return "error";
@@ -92,6 +83,28 @@ public class Controller {
             return null;
         }
     }
+
+
+    @PostMapping(value = "/renameFolder/{uuid}/{oldFolderName}/{newFolderName}")
+    public String create( @PathVariable String uuid, @PathVariable String oldFolderName, @PathVariable String newFolderName){
+        if(Mail.renameFolder(uuid, oldFolderName, newFolderName )){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
+
+    @DeleteMapping(value = "/deleteFolder/{folderName}")
+    public String delete(HttpServletRequest request, @PathVariable String folderName){
+        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+        if(Mail.deleteFolder(uuid, folderName)){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
 
     @PostMapping(value = "/moveEmail/{oldFolder}/{newFolder}")
     public String move(HttpServletRequest request, @PathVariable String oldFolder, @PathVariable String newFolder, @RequestBody String emailID){
