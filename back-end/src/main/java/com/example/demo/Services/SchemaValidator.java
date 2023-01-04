@@ -17,11 +17,8 @@ public class SchemaValidator {
     // create an instance of the JsonSchemaFactory using version flag
     private  JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
 
-
     //Singleton
     private static final SchemaValidator schemaValidator = new SchemaValidator();
-
-
     public static SchemaValidator getInstance(){
         return schemaValidator ;
     }

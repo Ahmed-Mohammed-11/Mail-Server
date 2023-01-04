@@ -30,23 +30,33 @@ public class DatabaseHandler {
 
     private DatabaseHandler() {}
 
+
+
     public static DatabaseHandler getInstance(){
         //singleton instance to make sure that just one instance of db is there in the code
         return dbHandler ;
     }
 
+
     public String getRegisterSchema() throws IOException {
         String schema = Files.readString(RegisterSchema);
         return schema;
     }
+
+
+
     public String getLogInSchema() throws IOException {
         String schema = Files.readString(LogInSchema);
         return schema;
     }
+
+
     public String getEmailSchema() throws IOException {
         String schema = Files.readString(EmailSchema);
         return schema;
     }
+
+
 
 
     public JSONArray getUsers() throws IOException, ParseException{
@@ -61,6 +71,8 @@ public class DatabaseHandler {
         //just dealing with json array users instead of reading each time from the database "Flyweight"
         return users;
     }
+
+
 
     public void saveUsers(JSONArray users, String uuid){
 
@@ -86,6 +98,8 @@ public class DatabaseHandler {
         trash.mkdir();
     }
 
+
+
     public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException{
 
         File userDirectory = new File(filePath + uuid + "\\" + folderName);
@@ -109,6 +123,8 @@ public class DatabaseHandler {
         return emails;
     }
 
+
+
     public void saveEmail(JSONObject email, String uuid, String emailID, String emailStatus){
         FileWriter userFile = null ;
         try {
@@ -126,40 +142,17 @@ public class DatabaseHandler {
     }
 
 
-
-    public boolean createFolder(String uuid, String folderName){
-        try {
-            File customFolder = new File(filePath + uuid + "\\" + folderName);
-
-            customFolder.mkdir();
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean deleteFolder(String uuid, String folderName){
-        try {
-            FileUtils.deleteDirectory(new File(filePath + uuid + "\\" + folderName));
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public String[] getFolders(String uuid){
-        
+
         try {
             File file = new File(filePath + uuid);
             String[] directories = file.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-            }
+                @Override
+                public boolean accept(File current, String name) {
+                    return new File(current, name).isDirectory();
+                }
             });
-            
+
             String[] directories_filtered = new String[directories.length - 4];
             int j = 0;
             for (int i = 0; i < directories.length; i++) {
@@ -176,6 +169,35 @@ public class DatabaseHandler {
         }
     }
 
+
+
+    public boolean createFolder(String uuid, String folderName){
+        try {
+            File customFolder = new File(filePath + uuid + "\\" + folderName);
+
+            customFolder.mkdir();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+    public boolean deleteFolder(String uuid, String folderName){
+        try {
+            FileUtils.deleteDirectory(new File(filePath + uuid + "\\" + folderName));
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     public boolean moveEmail(String uuid, String oldFolder, String newFolder, String emailID){
         try {
             File openOld = new File(filePath + uuid + "\\" + oldFolder + "\\" + emailID + ".json");
@@ -187,9 +209,12 @@ public class DatabaseHandler {
         }
     }
 
+
     public boolean deleteEmail(String uuid, String folderName, String emailID){
         File email = new File(filePath + uuid + "\\" + folderName + "\\" + emailID + ".json");
         if (email.delete()) {return true ;}
         else {return false;}
     }
+
+
 }

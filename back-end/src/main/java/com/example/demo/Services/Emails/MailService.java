@@ -10,6 +10,10 @@ import java.io.IOException;
 @Service
 public class MailService {
     private DatabaseHandler dbHanlder = DatabaseHandler.getInstance();
+    private ComposeService composeService = new ComposeService() ;
+
+
+    public String compose(String email) throws Exception{return composeService.compose(email);}
 
     public JSONArray getEmails(String uuid, String folderName) throws IOException, ParseException {
         return dbHanlder.getEmails(uuid, folderName);
@@ -33,18 +37,6 @@ public class MailService {
 
     public String[] getFolders(String uuid) {
         return dbHanlder.getFolders(uuid);
-    }
-
-    public void markAsRead(String uuid, String email) {
-        // To Do: Mark email as read
-    }
-
-    public void markAsImportant(String uuid, String email) {
-        // To Do: Mark email as important
-    }
-
-    public void markAsSpam(String uuid, String email) {
-        // To Do: Mark email as spam
     }
 
 }

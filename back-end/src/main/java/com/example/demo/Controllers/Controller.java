@@ -61,7 +61,7 @@ public class Controller {
 
     @PostMapping(value = "/compose")
     public String compose(@RequestBody String email) throws Exception{
-        return composeService.compose(email);
+        return Mail.compose(email);
     }
 
     @PostMapping(value = "/createFolder/{uuid}/{folderName}")

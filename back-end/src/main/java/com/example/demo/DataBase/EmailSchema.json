@@ -1,29 +1,50 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": [
-        "from",
-        "emailID",
-        "to",
-        "messageBody"
-    ],
     "properties": {
-        "attachments": {
+        "datetime": {
             "type": "string"
         },
         "messageBody": {
+            "type": "string"
+        },
+        "attachment": {
+            "type": "string"
+        },
+        "subject": {
+            "type": "string"
+        },
+        "emailID": {
             "type": "string"
         },
         "from": {
             "type": "string",
             "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
         },
-        "emailID": {
-            "type": "string"
-        },
         "to": {
+            "type": "array",
+            "minItems" : 1,
+            "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
+            }
+        },
+        "priority": {
             "type": "string",
-            "pattern": "^[A-Za-z0-9]*@(ahmed|talha|aladdin|embaby).tech$"
+            "minlength": 1,
+            "maxlength": 1
+        },
+        "uuid": {
+            "type": "string"
         }
-    }
+    },
+    "required": [
+        "datetime",
+        "messageBody",
+        "subject",
+        "emailID",
+        "from",
+        "to",
+        "uuid"
+    ]
 }
