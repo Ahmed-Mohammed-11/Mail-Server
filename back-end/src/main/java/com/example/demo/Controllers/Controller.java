@@ -18,6 +18,29 @@ import org.springframework.web.util.WebUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import org.springframework.http.MediaType;
+import java.io.*;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @RestController
 @CrossOrigin
 public class Controller {
@@ -53,7 +76,11 @@ public class Controller {
     public String getEmails( @PathVariable String uuid, @PathVariable String folderName) throws Exception{
         if (uuid != null){
             JSONArray emails = Mail.getEmails(uuid, folderName);
-            return emails.toString();
+            if (emails != null) {
+                return emails.toString();
+            } else {
+                return "null";
+            }
         } else {
             return "User is not logged in";
         }
@@ -87,7 +114,7 @@ public class Controller {
 
     @PostMapping(value = "/renameFolder/{uuid}/{oldFolderName}/{newFolderName}")
     public String create( @PathVariable String uuid, @PathVariable String oldFolderName, @PathVariable String newFolderName){
-        if(Mail.renameFolder(uuid, oldFolderName, newFolderName )){
+        if(Mail.renameFolder(uuid, oldFolderName, newFolderName)){
             return "success";
         }else{
             return "error";
@@ -95,9 +122,8 @@ public class Controller {
     }
 
 
-    @DeleteMapping(value = "/deleteFolder/{folderName}")
-    public String delete(HttpServletRequest request, @PathVariable String folderName){
-        String uuid = WebUtils.getCookie(request, "user_id").getValue();
+    @DeleteMapping(value = "/deleteFolder/{uuid}/{folderName}")
+    public String delete(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName){
         if(Mail.deleteFolder(uuid, folderName)){
             return "success";
         }else{
@@ -106,11 +132,8 @@ public class Controller {
     }
 
 
-    @PostMapping(value = "/moveEmail/{oldFolder}/{newFolder}")
-    public String move(HttpServletRequest request, @PathVariable String oldFolder, @PathVariable String newFolder, @RequestBody String emailID){
-        String uuid = WebUtils.getCookie(request, "user_id").getValue();
-        JSONObject emailIDJson = new JSONObject(emailID);
-        String eID = emailIDJson.getString("emailID");
+    @PostMapping(value = "/moveEmail/{uuid}/{oldFolder}/{newFolder}/{eID}")
+    public String move(HttpServletRequest request, @PathVariable String uuid, @PathVariable String eID, @PathVariable String oldFolder, @PathVariable String newFolder){
         if(Mail.moveEmail(uuid, oldFolder, newFolder, eID)){
             return "success";
         }else{
@@ -118,15 +141,50 @@ public class Controller {
         }
     }
 
-    @DeleteMapping(value = "/deleteEmail/{folderName}")
-    public String delete(HttpServletRequest request, @PathVariable String folderName, @RequestBody String emailID){
-        String uuid = WebUtils.getCookie(request, "user_id").getValue();
-        JSONObject emailIDJson = new JSONObject(emailID);
-        String eID = emailIDJson.getString("emailID");
-        if(Mail.deleteEmail(uuid, folderName, eID)){
-            return "success";
+    @DeleteMapping(value = "/deleteEmail/{uuid}/{folderName}/{emailID}")
+    public Map<String, String> delete(HttpServletRequest request, @PathVariable String uuid, @PathVariable String folderName, @PathVariable String emailID){
+        Map<String, String> respObj = new HashMap<>();
+        if(Mail.deleteEmail(uuid, folderName, emailID)){
+            respObj.put("status", "success");
         }else{
-            return "error";
+            respObj.put("status", "error");
         }
+        return respObj;
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> handleFileUpload( @RequestParam("file") MultipartFile file ) {
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\attachments\\";
+        String fileName = file.getOriginalFilename();
+        try {
+          file.transferTo( new File(filePath + fileName) );
+        } catch (Exception e) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } 
+        return ResponseEntity.ok("File uploaded successfully.");
+    }
+
+    @GetMapping("/download/{filename}")
+    public ResponseEntity<Resource> download(@PathVariable String filename) throws IOException {
+        
+        String FOLDER_PATH = System.getProperty("user.dir") + "\\src\\main\\java\\com\\example\\demo\\Database\\attachments\\";
+        File file = new File(FOLDER_PATH + File.separator + filename);
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+filename);
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+    }
+
+    
 }

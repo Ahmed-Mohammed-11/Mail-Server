@@ -15,6 +15,12 @@ export class FolderService {
     console.log("create")
     return this.http.post(this.baseURL + "createFolder/"+uuid+"/"+name, {},{ 'headers': headers ,responseType: 'text'});
   }
+  
+  public deleteFolder(name: string, uuid: string):Observable<any>{
+    console.log('deleteFolder')
+    const headers = { 'content-type': 'application/json' }
+    return this.http.delete(this.baseURL + "deleteFolder/"+uuid+"/"+name, {'headers': headers, responseType: 'text'});
+  }
 
   public getFolders(uuid: string):Observable<any>{
     console.log('getFolders')

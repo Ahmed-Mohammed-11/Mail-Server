@@ -36,7 +36,7 @@ public class ComposeService {
                 if (user.get("email").equals(emailJson.get("from"))) {
                     fromExists = true;
                     senderUUID = user.get("uuid").toString();
-//                    emailJson.put("from_fullname", user.get("firstname").toString() + " " + user.get("lastname").toString());
+                   emailJson.put("from_fullname", user.get("firstname").toString() + " " + user.get("lastname").toString());
                 }
             }
 
@@ -48,7 +48,7 @@ public class ComposeService {
                         toExist[j] = true;
                         receiverUUIDs[j] = user.get("uuid").toString();
                     }
-//                    emailJson.put("to_fullname", user.get("firstname").toString() + " " + user.get("lastname").toString());
+                   emailJson.put("to_fullname", user.get("firstname").toString() + " " + user.get("lastname").toString());
                 }
             }
 

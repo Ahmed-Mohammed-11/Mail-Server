@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FolderService } from "../services/folder.service";
 import { GetEmailsService } from "../services/get-emails.service";
 import { ComposeService } from "../services/compose.service";
-import {ListService} from "../services/list.service";
 
 // Returns a random integer number less than max
 function getRandomInt(max: number) {
@@ -16,22 +15,30 @@ function getRandomInt(max: number) {
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit{
-  page = "mails";     // Viewing page
+  page = "inbox";     // Viewing page
   uuid = "";          // User ID
   display = "";       // Displayed Message (for success messages)
   folders: any;       // List of folders names
   results: any;       // List of emails
   full_results: any;  // Another copy of list of emails (Because results can be modified by search algorithms)
   email_preview: any; // Email Object for Preview
+  cursor = 0;         // Cursor for navigating emails
+  reply_to = "";      // Reply-To field
+  reply_subject = "";
+  isHidden:boolean = true;
+  buttonTitle:string = "";
+  pagenumber = 1;
+  page_size = 10;
+  compose_attachments:String[] = [];
+  SPRINGBOOT = "http://localhost:8081/";
+  CURRENT_FOLDER = "inbox";
 
   
   constructor(
       private rouv: ActivatedRoute,
-      private router: Router,
       private myfolder: FolderService,
       private emails: GetEmailsService,
       private serve: ComposeService,
-      private emailfolder :ListService,
   ) {
   }
   ngOnInit() {
@@ -50,34 +57,76 @@ export class NavBarComponent implements OnInit{
       } else {
         // SHOW NAVBAR
         // @ts-ignore
-        this.getFolders();
-        this.getEmails("inbox");
-        this.email_preview = this.results[0];
+        this.refresh();
       }
     });
   }
 
-  public setCurrentPage(page: string){
+  public refresh(){
+    this.getFolders();
+    this.getEmails(this.page);
+    this.search_for();
+    this.sortEmails();
+  }
+
+  isPriorityBadgeActive(x: number, y: String){
+    var j: number = +y;
+    if (x <= j){
+      return "active";
+    }
+    return "";
+  }
+
+  public setCurrentPage(page: string, to=null, subject=null){
     if (page != this.page){
       this.page = page;
-      this.getEmails(this.page);
-      console.log('New Page View: ' + this.page);
+      if (page != 'preview' && page != 'compose'){
+        this.CURRENT_FOLDER = page;
+      }
+      console.log(page);
+      if (to != null && subject != null){
+        this.reply_to = to;
+        this.reply_subject = "Re: " + subject;
+      }
+      // this.refresh();
     }
   }
 
-  isHidden:boolean = true;
-  buttonTitle:string = "";
+  public viewEmail(emailID: string){
+    for (let i = 0; i < this.results.length; i++){
+      if (this.results[i].emailID == emailID){
+        this.email_preview = this.results[i];
+        this.setCurrentPage('preview');
+        this.cursor = i;
+        break;
+      }
+    }
+  }
+
+  public navigateEmails(direction: string){
+    console.log(this.results);
+    if (direction == 'forward' && this.cursor != this.results.length - 1){
+      this.cursor += 1;
+    } else if (direction == "back" && this.cursor != 0) {
+      this.cursor -= 1;
+    }
+    this.email_preview = this.results[this.cursor];
+  }
+
+  public pagination(n: number){
+    if (n > 0 && this.pagenumber*this.page_size < this.results.length - 1){
+      this.refresh();
+      this.pagenumber += 1;
+    } else if (n < 0 && this.pagenumber != 1) {
+      this.refresh();
+      this.pagenumber -= 1;
+    }
+  }
 
   createClicked() {
     this.isHidden = false;
     console.log(this.isHidden);
     this.buttonTitle = "Create";
-  } 
-
-  deleteClicked() {
-    this.isHidden = false;
-    console.log(this.isHidden);
-    this.buttonTitle = "Delete";
   }
   
   folder(){
@@ -91,11 +140,26 @@ export class NavBarComponent implements OnInit{
           console.log(error);
         });
       }
-      else {
-        console.log(this.buttonTitle);
-      }
+      else if (this.buttonTitle === "Delete") {
+        console.log(name);
+        if (name != null) {
+          this.myfolder.deleteFolder(name, this.uuid).subscribe(data=>{
+            console.log(data);
+          },error => {
+            console.log(error);
+          });
+        }
+      } 
+      // else if (this.buttonTitle === "Move"){
+        // this.moveEmail(this.temp_emailID, this.temp_oldFolder, name);
+      // }
       this.isHidden = true;
     }
+  }
+
+  deleteFolder(){
+    this.isHidden = false;
+    this.buttonTitle = "Delete";
   }
 
   getFolders(){
@@ -113,16 +177,39 @@ export class NavBarComponent implements OnInit{
   }
 
   search_for(){
-    let search_key = (document.getElementById('search') as HTMLInputElement | null)?.value;
-    this.results = [];
-    for (let i = 0; i < this.full_results.length; i++) {
-      if (this.full_results[i].subject?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i].from?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i]?.toLowerCase().to.includes(search_key?.toLowerCase())
-      || this.full_results[i].messageBody?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i].datetime?.toLowerCase().includes(search_key?.toLowerCase())) {
-        this.results.push(this.full_results[i]);
+    try{
+      if (this.full_results == null){return}
+      let search_key = (document.getElementById('search') as HTMLInputElement | null)?.value;
+      this.results = [];
+      for (let i = 0; i < this.full_results.length; i++) {
+        if (this.full_results[i].subject?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i].from?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i]?.toLowerCase().to.includes(search_key?.toLowerCase())
+        || this.full_results[i].messageBody?.toLowerCase().includes(search_key?.toLowerCase()) || this.full_results[i].datetime?.toLowerCase().includes(search_key?.toLowerCase())) {
+          this.results.push(this.full_results[i]);
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   }
 
+  // temp_emailID = "";
+  // temp_oldFolder = "";
+  moveEmail(emailID: string, oldFolder: string, newFolder: string){
+    if (newFolder == ""){
+      this.isHidden = false;
+      this.buttonTitle = "Move";
+      // this.temp_emailID = emailID;
+      // this.temp_oldFolder = oldFolder;
+      return;
+    }
+    this.emails.moveEmail(this.uuid, oldFolder, emailID, newFolder).subscribe(data=>{
+      console.log(data);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  // Handle Emails
   getEmails(folder: string){
     this.emails.getEmails(this.uuid, folder).forEach((data: any) => {
       this.full_results = data;
@@ -130,34 +217,75 @@ export class NavBarComponent implements OnInit{
     });
   }
 
+  deleteEmail (emailID: string){
+    this.emails.deleteEmail(this.uuid, this.page, emailID).subscribe(data=>{
+      console.log(data);
+    },error => {
+      console.log(error);
+    });
+  }
+
   public send(){
     let to = (document.getElementById('to') as HTMLInputElement | null)?.value;
     let sub = (document.getElementById('subject') as HTMLInputElement | null)?.value;
     let message = (document.getElementById('message') as HTMLInputElement | null)?.value;
-    let attachment = (document.getElementById('attachment') as HTMLInputElement | null)?.value;
     let from = localStorage.getItem('email');
     let uuid = window.location.href.split('uuid=')[1].split('&')[0];
     let mail = {
-      'emailID': getRandomInt(100000).toString(),
+      'emailID': "mail_"+getRandomInt(100000).toString(),
       "datetime": new Date().toLocaleString(),
       "from": from,
-      "to": to,
+      "to": [to],
       "messageBody": message,
       "uuid": uuid,
       "subject": sub,
-      "attachment": attachment,
-      "priority": "3"
+      "attachment": this.compose_attachments.join(','),
+      "priority": "0"
     }
-    console.log(mail);
+    // Error Handling
+    if ((to == null || sub == null || message == null || from == null || uuid == null) || (to == "" || sub == "" || message == "" || from == "" || uuid == "")) {
+      this.display = "Please fill out all fields";
+      return;
+    }
     this.serve.compose(mail).subscribe(data=>{
-      console.log(data)
+      console.log(data);
       this.display = "Email sent successfully!";
       this.page = "inbox";
     },error => {
       console.log(error);
     });
-    console.log(to,message,sub,attachment);
-    console.log(localStorage.getItem('email'))
+    this.page = "inbox";
+    this.refresh();
+  }
+
+  public setPriority(email: any, newPriority: number){
+    // DELETE INITIAL EMAIL
+    this.emails.deleteEmail(this.uuid, this.page, email.emailID).subscribe(data=>{
+      console.log(data);
+    },error => {
+      console.log(error);
+    });
+
+    // CREATE NEW EMAIL
+    let mail = {
+      'emailID': email.emailID,
+      "datetime": email.datetime,
+      "from": email.from,
+      "to": email.to.split(','),
+      "messageBody": email.messageBody,
+      "uuid": this.uuid,
+      "subject": email.subject,
+      "attachment": email.attachment,
+      "priority": newPriority.toString()
+    }
+
+    this.serve.compose(mail).subscribe(data=>{
+      console.log(data);
+      this.page = "inbox";
+    },error => {
+      console.log(error);
+    });
+    // this.refresh();
   }
 
   public draft(){
@@ -175,10 +303,11 @@ export class NavBarComponent implements OnInit{
 
   sortEmails(){
     let select = (document.getElementById('sort') as HTMLInputElement | null)?.value;
+    let sorted = [];
+    // let 
     switch (select) {
       case "1":
-        // Sort by priority
-        // this.full_results = _.sortBy(this.full_results, 'first_nom');
+        // Sort by Priority
         break;
       case "2":
         // Sort by Date
@@ -189,6 +318,26 @@ export class NavBarComponent implements OnInit{
         break;
 
     }
+  }
+
+  fileChange(event: any): void{
+    if (event){
+      const fileList: FileList = event.target.files;
+      if (fileList.length > 0) {
+        const file = fileList[0];
+        this.compose_attachments.push(file.name);
+        this.serve.uploadFile(file).subscribe(data=>{
+          console.log(data)
+        },error => {
+          console.log(error);
+        });
+        console.log('Uploaded!');
+      }
+    }
+  }
+
+  popAttachment(attachment: String){
+    this.compose_attachments = this.compose_attachments.filter((item) => item !== attachment);
   }
 
 }

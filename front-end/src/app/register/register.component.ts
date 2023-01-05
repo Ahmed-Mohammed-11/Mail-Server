@@ -70,8 +70,8 @@ const shajs = require('sha.js');
       };
       this.registerser.register(pdata).subscribe(data=>{
         if(data!="this email is already taken") {
-          this.router.navigate(["/nav-bar/"], {queryParams: {data2: "true"}});
-          this.nameEmitterr.emit("nav");
+          this.router.navigate(["/login"]);
+          this.nameEmitterr.emit("login");
           // @ts-ignore
           document.getElementById("register").style.display = "none";
           localStorage.setItem('email' , String(email));

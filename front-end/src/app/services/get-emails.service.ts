@@ -11,9 +11,20 @@ export class GetEmailsService {
   constructor(private http: HttpClient) { }
 
   public getEmails(uuid: string, folder: string):Observable<any> {
-    console.log("getEmails")
     let response = this.http.get(this.baseURL + 'getEmails/' + uuid + '/' + folder);
-    console.log(response.subscribe());
     return response;
   }
+  
+  public deleteEmail(uuid: string, folder: string, emailid: string):Observable<any>{
+    const headers = { 'content-type': 'application/json' }
+    let response = this.http.delete(this.baseURL + 'deleteEmail/' + uuid + '/' + folder + '/' + emailid, {'headers': headers, responseType: 'json'});
+    return response;
+  }
+
+  public moveEmail(uuid: string, folder: string, emailid: string, newFolder: string):Observable<any>{
+    const headers = { 'content-type': 'application/json' }
+    let response = this.http.post(this.baseURL + 'moveEmail/' + uuid + '/' + folder + '/' + newFolder + '/' + emailid, {}, {'headers': headers, responseType: 'json'});
+    return response;
+  }
+
 }

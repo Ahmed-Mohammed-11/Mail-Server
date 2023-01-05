@@ -10,7 +10,6 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
   public register(pdata:object):Observable<any> {
     const headers = { 'content-type': 'application/json' }
-    console.log("create")
     return this.http.post(this.baseURL + 'register', JSON.stringify(pdata), { 'headers': headers ,responseType: 'text'});
   }
 }

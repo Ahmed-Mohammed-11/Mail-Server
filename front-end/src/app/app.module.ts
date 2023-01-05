@@ -7,7 +7,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ComposeComponent } from './compose/compose.component';
-import { CookieService } from 'ngx-cookie-service';
 import { ListComponent } from './list/list.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { ListComponent } from './list/list.component';
     AppRoutingModule
   ],
   providers: [
-    CookieService
   ],
   bootstrap: [
     AppComponent

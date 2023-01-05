@@ -4,8 +4,6 @@ import { LoginComponent } from '../app/login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
-// import { LoginComponent } from './login';
-
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

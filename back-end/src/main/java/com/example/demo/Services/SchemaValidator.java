@@ -34,7 +34,7 @@ public class SchemaValidator {
         // show the validation errors
         if (validationResult.isEmpty()) {
             // show custom message if there is no validation error
-            System.out.println( "There is no validation errors" );
+            System.out.println( "[JSON SCHEMA VALIDATOR] No Errors Found" );
             return true;
         } else {
             // show all the validation error
