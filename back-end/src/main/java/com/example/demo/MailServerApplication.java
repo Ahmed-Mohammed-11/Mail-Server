@@ -29,7 +29,7 @@ public class MailServerApplication {
                     deleteFiles(file);
                     if(file.getAbsolutePath().contains("trash")){
                         long diff = new Date().getTime() - file.lastModified();
-                        if (diff > abs(30 * 24 * 60 * 60 * 1000)) {file.delete();}
+                        if (diff > (30 * 24 * 60 * 60 * 1000L)) {file.delete();}
                     }
                 }
             }
